@@ -1,0 +1,280 @@
+.type POI_ID <: symbol
+.type COL_A <: symbol
+.type COL_B <: symbol
+.type COL_C <: symbol
+.type COL_D <: symbol
+.type COL_E <: symbol
+.type COL_F <: symbol
+
+.decl poi(v0: POI_ID, v1: COL_A, v2: COL_B, v3: COL_C)
+.decl points(v0: POI_ID, v1: COL_D, v2: COL_E, v3: COL_F)
+.decl poi_view(v0: POI_ID, v1: COL_A, v2: COL_B, v3: COL_D, v4: COL_E)
+.decl M__1(v0: POI_ID, v1: COL_A, v2: COL_B)
+.decl M__2(v0: POI_ID, v1: COL_D, v2: COL_E)
+.decl poi_update(v0: POI_ID, v1: COL_A, v2: COL_B, v3: COL_C)
+.decl poi_sdt_insert(v0: POI_ID, v1: COL_A, v2: COL_B, v3: COL_C)
+.decl poi_sdt_delete(v0: POI_ID, v1: COL_A, v2: COL_B, v3: COL_C)
+.decl points_update(v0: POI_ID, v1: COL_D, v2: COL_E, v3: COL_F)
+.decl points_sdt_insert(v0: POI_ID, v1: COL_D, v2: COL_E, v3: COL_F)
+.decl points_sdt_delete(v0: POI_ID, v1: COL_D, v2: COL_E, v3: COL_F)
+.decl poi_view_update(v0: POI_ID, v1: COL_A, v2: COL_B, v3: COL_D, v4: COL_E)
+.decl poi_view_vdt_insert(v0: POI_ID, v1: COL_A, v2: COL_B, v3: COL_D, v4: COL_E)
+.decl poi_view_vdt_delete(v0: POI_ID, v1: COL_A, v2: COL_B, v3: COL_D, v4: COL_E)
+.decl M__1_update(v0: POI_ID, v1: COL_A, v2: COL_B)
+.decl M__1_sdt_insert(v0: POI_ID, v1: COL_A, v2: COL_B)
+.decl M__1_sdt_delete(v0: POI_ID, v1: COL_A, v2: COL_B)
+.decl M__1_vdt_insert(v0: POI_ID, v1: COL_A, v2: COL_B)
+.decl M__1_vdt_delete(v0: POI_ID, v1: COL_A, v2: COL_B)
+.decl M__2_update(v0: POI_ID, v1: COL_D, v2: COL_E)
+.decl M__2_sdt_insert(v0: POI_ID, v1: COL_D, v2: COL_E)
+.decl M__2_sdt_delete(v0: POI_ID, v1: COL_D, v2: COL_E)
+.decl M__2_vdt_insert(v0: POI_ID, v1: COL_D, v2: COL_E)
+.decl M__2_vdt_delete(v0: POI_ID, v1: COL_D, v2: COL_E)
+.decl Au_P_0_M__1_poi(v0: COL_C)
+.decl Au_P_1_M__1_poi(v0: POI_ID, v1: COL_A, v2: COL_B, v3: COL_C)
+.decl Au_P_0_M__2_points(v0: COL_F)
+.decl Au_P_1_M__2_points(v0: POI_ID, v1: COL_D, v2: COL_E, v3: COL_F)
+.decl Fr__(v0: symbol)
+.decl Fv__(v0: symbol)
+
+.input poi
+.input points
+.output poi_update
+.output points_update
+.input poi_view_update
+.output Fr__
+.output Fv__
+
+M__1(v0, v1, v2) :- poi(v0, v1, v2, v3).
+M__2(v0, v1, v2) :- points(v0, v1, v2, v3).
+poi_view(v0, v1, v2, v3, v4) :- M__1(v0, v1, v2), M__2(v0, v3, v4).
+
+M__1_vdt_delete(v0, v1, v2) :- M__1(v0, v1, v2), !M__1_update(v0, v1, v2).
+M__1_vdt_insert(v0, v1, v2) :- M__1_update(v0, v1, v2), !M__1(v0, v1, v2).
+M__2_vdt_delete(v0, v1, v2) :- M__2(v0, v1, v2), !M__2_update(v0, v1, v2).
+M__2_vdt_insert(v0, v1, v2) :- M__2_update(v0, v1, v2), !M__2(v0, v1, v2).
+poi_view_vdt_delete(v0, v1, v2, v3, v4) :- poi_view(v0, v1, v2, v3, v4), !poi_view_update(v0, v1, v2, v3, v4).
+poi_view_vdt_insert(v0, v1, v2, v3, v4) :- poi_view_update(v0, v1, v2, v3, v4), !poi_view(v0, v1, v2, v3, v4).
+
+M__1_update(v0, v1, v2) :- M__1(v0, v1, v2), !M__1_sdt_delete(v0, v1, v2); M__1_sdt_insert(v0, v1, v2).
+M__2_update(v0, v1, v2) :- M__2(v0, v1, v2), !M__2_sdt_delete(v0, v1, v2); M__2_sdt_insert(v0, v1, v2).
+poi_update(v0, v1, v2, v3) :- poi(v0, v1, v2, v3), !poi_sdt_delete(v0, v1, v2, v3); poi_sdt_insert(v0, v1, v2, v3).
+points_update(v0, v1, v2, v3) :- points(v0, v1, v2, v3), !points_sdt_delete(v0, v1, v2, v3); points_sdt_insert(v0, v1, v2, v3).
+
+Fr__("_rejected_") :- M__1_sdt_delete(v0, _, _), M__1_update(v0, _, _), M__2_sdt_delete(v0, _, _), M__2_update(v0, _, _).
+Fr__("_rejected_") :- M__1_sdt_insert(v0, _, _), M__1(v0, _, _).
+Fr__("_rejected_") :- M__2_sdt_insert(v0, _, _), M__2(v0, _, _).
+Fv__("_valid_") :- !Fr__("_rejected_").
+
+M__1_sdt_delete(v0, v1, v2) :- poi_view_vdt_delete(v0, v1, v2, _, _), M__1(v0, v1, v2).
+M__1_sdt_insert(v0, v1, v2) :- poi_view_vdt_insert(v0, v1, v2, _, _), !M__1(v0, v1, v2).
+M__2_sdt_delete(v0, v3, v4) :- poi_view_vdt_delete(v0, _, _, v3, v4), M__2(v0, v3, v4).
+M__2_sdt_insert(v0, v3, v4) :- poi_view_vdt_insert(v0, _, _, v3, v4), !M__2(v0, v3, v4).
+poi_sdt_delete(v0, v1, v2, v3) :- M__1_vdt_delete(v0, v1, v2), poi(v0, v1, v2, v3).
+poi_sdt_insert(v0, v1, v2, v3) :- M__1_vdt_insert(v0, v1, v2), Au_P_0_M__1_poi(v3), !Au_P_1_M__1_poi(v0, v1, v2, _), !poi(v0, v1, v2, _).
+poi_sdt_insert(v0, v1, v2, v3) :- M__1_vdt_insert(v0, v1, v2), Au_P_1_M__1_poi(v0, v1, v2, v3), !poi(v0, v1, v2, _).
+points_sdt_delete(v0, v1, v2, v3) :- M__2_vdt_delete(v0, v1, v2), points(v0, v1, v2, v3).
+points_sdt_insert(v0, v1, v2, v3) :- M__2_vdt_insert(v0, v1, v2), Au_P_0_M__2_points(v3), !Au_P_1_M__2_points(v0, v1, v2, _), !points(v0, v1, v2, _).
+points_sdt_insert(v0, v1, v2, v3) :- M__2_vdt_insert(v0, v1, v2), Au_P_1_M__2_points(v0, v1, v2, v3), !points(v0, v1, v2, _).
+
+Au_P_0_M__1_poi("500").
+Au_P_1_M__1_poi("2000", "206", "375", "543").
+Au_P_1_M__1_poi("2001", "243", "328", "581").
+Au_P_1_M__1_poi("2002", "183", "491", "561").
+Au_P_1_M__1_poi("2003", "201", "439", "599").
+Au_P_1_M__1_poi("2004", "148", "308", "504").
+Au_P_1_M__1_poi("2005", "212", "277", "590").
+Au_P_1_M__1_poi("2006", "123", "312", "509").
+Au_P_1_M__1_poi("2007", "212", "459", "549").
+Au_P_1_M__1_poi("2008", "141", "370", "502").
+Au_P_1_M__1_poi("2009", "161", "393", "560").
+Au_P_1_M__1_poi("2010", "138", "316", "506").
+Au_P_1_M__1_poi("2011", "139", "250", "525").
+Au_P_1_M__1_poi("2012", "113", "343", "573").
+Au_P_1_M__1_poi("2013", "192", "254", "599").
+Au_P_1_M__1_poi("2014", "155", "401", "527").
+Au_P_1_M__1_poi("2015", "228", "317", "520").
+Au_P_1_M__1_poi("2016", "226", "393", "523").
+Au_P_1_M__1_poi("2017", "146", "443", "578").
+Au_P_1_M__1_poi("2018", "244", "493", "555").
+Au_P_1_M__1_poi("2019", "143", "312", "509").
+Au_P_1_M__1_poi("2020", "213", "439", "519").
+Au_P_1_M__1_poi("2021", "132", "334", "559").
+Au_P_1_M__1_poi("2022", "152", "409", "561").
+Au_P_1_M__1_poi("2024", "218", "353", "506").
+Au_P_1_M__1_poi("2025", "150", "328", "569").
+Au_P_1_M__1_poi("2026", "182", "419", "538").
+Au_P_1_M__1_poi("2027", "183", "480", "568").
+Au_P_1_M__1_poi("2028", "119", "387", "588").
+Au_P_1_M__1_poi("2029", "126", "250", "526").
+Au_P_1_M__1_poi("2030", "132", "464", "550").
+Au_P_1_M__1_poi("2031", "155", "342", "571").
+Au_P_1_M__1_poi("2032", "124", "480", "558").
+Au_P_1_M__1_poi("2033", "109", "342", "567").
+Au_P_1_M__1_poi("2034", "143", "497", "559").
+Au_P_1_M__1_poi("2035", "218", "352", "528").
+Au_P_1_M__1_poi("2036", "196", "287", "598").
+Au_P_1_M__1_poi("2037", "181", "254", "568").
+Au_P_1_M__1_poi("2038", "156", "302", "557").
+Au_P_1_M__1_poi("2039", "155", "429", "533").
+Au_P_1_M__1_poi("2040", "192", "308", "556").
+Au_P_1_M__1_poi("2041", "206", "398", "521").
+Au_P_1_M__1_poi("2042", "193", "254", "524").
+Au_P_1_M__1_poi("2043", "176", "354", "547").
+Au_P_1_M__1_poi("2044", "216", "461", "566").
+Au_P_1_M__1_poi("2045", "111", "379", "520").
+Au_P_1_M__1_poi("2046", "104", "424", "505").
+Au_P_1_M__1_poi("2047", "137", "444", "595").
+Au_P_1_M__1_poi("2048", "160", "328", "516").
+Au_P_1_M__1_poi("2049", "132", "401", "575").
+Au_P_1_M__1_poi("2050", "154", "481", "541").
+Au_P_1_M__1_poi("2051", "101", "368", "550").
+Au_P_1_M__1_poi("2052", "176", "388", "583").
+Au_P_1_M__1_poi("2053", "125", "297", "510").
+Au_P_1_M__1_poi("2054", "135", "392", "521").
+Au_P_1_M__1_poi("2055", "109", "499", "560").
+Au_P_1_M__1_poi("2056", "215", "436", "515").
+Au_P_1_M__1_poi("2057", "180", "441", "547").
+Au_P_1_M__1_poi("2058", "249", "344", "578").
+Au_P_1_M__1_poi("2059", "225", "453", "531").
+Au_P_1_M__1_poi("2060", "225", "296", "583").
+Au_P_1_M__1_poi("2061", "110", "256", "589").
+Au_P_1_M__1_poi("2062", "118", "375", "556").
+Au_P_1_M__1_poi("2063", "169", "495", "521").
+Au_P_1_M__1_poi("2064", "108", "452", "576").
+Au_P_1_M__1_poi("2065", "185", "280", "544").
+Au_P_1_M__1_poi("2066", "199", "379", "528").
+Au_P_1_M__1_poi("2067", "132", "308", "556").
+Au_P_1_M__1_poi("2068", "182", "302", "522").
+Au_P_1_M__1_poi("2069", "161", "376", "507").
+Au_P_1_M__1_poi("2070", "215", "354", "544").
+Au_P_1_M__1_poi("2071", "180", "374", "518").
+Au_P_1_M__1_poi("2072", "241", "438", "532").
+Au_P_1_M__1_poi("2073", "156", "435", "557").
+Au_P_1_M__1_poi("2074", "156", "339", "588").
+Au_P_1_M__1_poi("2075", "155", "281", "525").
+Au_P_1_M__1_poi("2076", "163", "268", "593").
+Au_P_1_M__1_poi("2077", "115", "324", "505").
+Au_P_1_M__1_poi("2078", "152", "458", "544").
+Au_P_1_M__1_poi("2079", "206", "462", "539").
+Au_P_1_M__1_poi("2080", "230", "313", "597").
+Au_P_1_M__1_poi("2081", "171", "426", "582").
+Au_P_1_M__1_poi("2082", "187", "484", "566").
+Au_P_1_M__1_poi("2083", "229", "467", "527").
+Au_P_1_M__1_poi("2084", "166", "453", "560").
+Au_P_1_M__1_poi("2085", "180", "381", "587").
+Au_P_1_M__1_poi("2086", "242", "337", "551").
+Au_P_1_M__1_poi("2087", "242", "473", "517").
+Au_P_1_M__1_poi("2088", "164", "472", "569").
+Au_P_1_M__1_poi("2089", "123", "350", "574").
+Au_P_1_M__1_poi("2090", "177", "293", "562").
+Au_P_1_M__1_poi("2091", "225", "319", "517").
+Au_P_1_M__1_poi("2092", "176", "464", "501").
+Au_P_1_M__1_poi("2093", "152", "364", "537").
+Au_P_1_M__1_poi("2094", "107", "461", "533").
+Au_P_1_M__1_poi("2095", "201", "284", "588").
+Au_P_1_M__1_poi("2096", "116", "314", "560").
+Au_P_1_M__1_poi("2097", "144", "285", "593").
+Au_P_1_M__1_poi("2098", "226", "378", "573").
+Au_P_1_M__1_poi("2099", "173", "390", "575").
+Au_P_0_M__2_points("f504").
+Au_P_1_M__2_points("2000", "d149", "e174", "f214").
+Au_P_1_M__2_points("2001", "d249", "e135", "f209").
+Au_P_1_M__2_points("2002", "d399", "e311", "f336").
+Au_P_1_M__2_points("2003", "d318", "e101", "f147").
+Au_P_1_M__2_points("2004", "d316", "e163", "f112").
+Au_P_1_M__2_points("2005", "d161", "e180", "f132").
+Au_P_1_M__2_points("2006", "d170", "e336", "f201").
+Au_P_1_M__2_points("2007", "d253", "e141", "f150").
+Au_P_1_M__2_points("2008", "d131", "e191", "f337").
+Au_P_1_M__2_points("2009", "d162", "e249", "f228").
+Au_P_1_M__2_points("2010", "d135", "e334", "f115").
+Au_P_1_M__2_points("2011", "d126", "e146", "f341").
+Au_P_1_M__2_points("2012", "d312", "e147", "f309").
+Au_P_1_M__2_points("2013", "d203", "e130", "f338").
+Au_P_1_M__2_points("2014", "d295", "e125", "f131").
+Au_P_1_M__2_points("2015", "d384", "e165", "f354").
+Au_P_1_M__2_points("2016", "d245", "e237", "f241").
+Au_P_1_M__2_points("2017", "d241", "e214", "f221").
+Au_P_1_M__2_points("2018", "d380", "e328", "f167").
+Au_P_1_M__2_points("2019", "d200", "e124", "f196").
+Au_P_1_M__2_points("2020", "d351", "e258", "f229").
+Au_P_1_M__2_points("2021", "d162", "e381", "f159").
+Au_P_1_M__2_points("2022", "d220", "e129", "f143").
+Au_P_1_M__2_points("2023", "d273", "e391", "f106").
+Au_P_1_M__2_points("2024", "d355", "e314", "f338").
+Au_P_1_M__2_points("2025", "d105", "e247", "f236").
+Au_P_1_M__2_points("2026", "d226", "e187", "f381").
+Au_P_1_M__2_points("2027", "d197", "e350", "f345").
+Au_P_1_M__2_points("2028", "d339", "e158", "f205").
+Au_P_1_M__2_points("2029", "d351", "e110", "f302").
+Au_P_1_M__2_points("2030", "d112", "e382", "f263").
+Au_P_1_M__2_points("2031", "d350", "e259", "f247").
+Au_P_1_M__2_points("2032", "d329", "e279", "f262").
+Au_P_1_M__2_points("2033", "d177", "e175", "f254").
+Au_P_1_M__2_points("2034", "d288", "e395", "f130").
+Au_P_1_M__2_points("2035", "d178", "e184", "f139").
+Au_P_1_M__2_points("2036", "d330", "e137", "f191").
+Au_P_1_M__2_points("2037", "d387", "e354", "f129").
+Au_P_1_M__2_points("2038", "d349", "e162", "f340").
+Au_P_1_M__2_points("2039", "d367", "e151", "f177").
+Au_P_1_M__2_points("2040", "d396", "e193", "f153").
+Au_P_1_M__2_points("2041", "d377", "e361", "f382").
+Au_P_1_M__2_points("2042", "d210", "e149", "f259").
+Au_P_1_M__2_points("2043", "d395", "e254", "f305").
+Au_P_1_M__2_points("2044", "d277", "e300", "f250").
+Au_P_1_M__2_points("2045", "d146", "e203", "f338").
+Au_P_1_M__2_points("2046", "d253", "e352", "f277").
+Au_P_1_M__2_points("2047", "d388", "e136", "f325").
+Au_P_1_M__2_points("2048", "d124", "e148", "f358").
+Au_P_1_M__2_points("2049", "d280", "e247", "f127").
+Au_P_1_M__2_points("2050", "d231", "e328", "f236").
+Au_P_1_M__2_points("2051", "d258", "e157", "f345").
+Au_P_1_M__2_points("2052", "d373", "e386", "f114").
+Au_P_1_M__2_points("2053", "d314", "e352", "f230").
+Au_P_1_M__2_points("2054", "d101", "e377", "f246").
+Au_P_1_M__2_points("2055", "d171", "e265", "f112").
+Au_P_1_M__2_points("2056", "d154", "e350", "f309").
+Au_P_1_M__2_points("2057", "d352", "e124", "f178").
+Au_P_1_M__2_points("2058", "d295", "e187", "f194").
+Au_P_1_M__2_points("2059", "d366", "e193", "f310").
+Au_P_1_M__2_points("2060", "d276", "e164", "f229").
+Au_P_1_M__2_points("2061", "d314", "e397", "f349").
+Au_P_1_M__2_points("2062", "d166", "e203", "f389").
+Au_P_1_M__2_points("2063", "d166", "e112", "f363").
+Au_P_1_M__2_points("2064", "d223", "e155", "f386").
+Au_P_1_M__2_points("2065", "d326", "e131", "f380").
+Au_P_1_M__2_points("2066", "d287", "e130", "f200").
+Au_P_1_M__2_points("2067", "d321", "e344", "f197").
+Au_P_1_M__2_points("2068", "d194", "e262", "f361").
+Au_P_1_M__2_points("2069", "d258", "e278", "f200").
+Au_P_1_M__2_points("2070", "d153", "e365", "f311").
+Au_P_1_M__2_points("2071", "d224", "e260", "f235").
+Au_P_1_M__2_points("2072", "d100", "e114", "f332").
+Au_P_1_M__2_points("2073", "d143", "e374", "f102").
+Au_P_1_M__2_points("2074", "d376", "e212", "f123").
+Au_P_1_M__2_points("2075", "d315", "e136", "f367").
+Au_P_1_M__2_points("2076", "d101", "e345", "f318").
+Au_P_1_M__2_points("2077", "d160", "e163", "f217").
+Au_P_1_M__2_points("2078", "d254", "e111", "f104").
+Au_P_1_M__2_points("2079", "d387", "e155", "f195").
+Au_P_1_M__2_points("2080", "d138", "e234", "f173").
+Au_P_1_M__2_points("2081", "d382", "e101", "f353").
+Au_P_1_M__2_points("2082", "d181", "e207", "f137").
+Au_P_1_M__2_points("2083", "d117", "e203", "f374").
+Au_P_1_M__2_points("2084", "d151", "e251", "f203").
+Au_P_1_M__2_points("2085", "d132", "e195", "f231").
+Au_P_1_M__2_points("2086", "d189", "e262", "f199").
+Au_P_1_M__2_points("2087", "d215", "e321", "f232").
+Au_P_1_M__2_points("2088", "d129", "e245", "f268").
+Au_P_1_M__2_points("2089", "d297", "e245", "f338").
+Au_P_1_M__2_points("2090", "d392", "e151", "f309").
+Au_P_1_M__2_points("2091", "d161", "e106", "f322").
+Au_P_1_M__2_points("2092", "d238", "e106", "f315").
+Au_P_1_M__2_points("2093", "d184", "e381", "f251").
+Au_P_1_M__2_points("2094", "d375", "e304", "f201").
+Au_P_1_M__2_points("2095", "d280", "e136", "f124").
+Au_P_1_M__2_points("2096", "d252", "e363", "f168").
+Au_P_1_M__2_points("2097", "d355", "e386", "f117").
+Au_P_1_M__2_points("2098", "d205", "e329", "f244").
+Au_P_1_M__2_points("2099", "d283", "e320", "f339").

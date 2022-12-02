@@ -1,0 +1,9 @@
+[1;36m[+] Synthesizing get[0m
+[1;33m--------Iteration 1 --------[0m
+[1;33mCalls to z3: 1, Calls to Souffle: 0
+Culumative Number of Constraints - - Why: 0, Whynot: 0
+[0m
+[1;36m[+] Exit Synthesizing get[0m
+SynthTime (get.dl): [0, 0]
+Total runtime (get.dl): 0.03911399841308594
+Number of found gets (get.dl):0
